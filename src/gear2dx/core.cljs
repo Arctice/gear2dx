@@ -18,6 +18,10 @@
          "<tr> <td align=\"right\">Offset (iidx):</td>"
          "<td align=\"left\">" "<input id=\"offset-iidx\" type=\"number\" minlength=\"1\" value=\"0.0\"></input>"
          "</td></tr>"
+         "<tr> <td align=\"right\">Base offset:</td> "
+         "<td align=\"left\">" "<input id=\"base-offset\" type=\"number\" minlength=\"1\" value=\"-0.25\"></input>"
+         "</td></tr>"
+         "<tr><td></td><td>Base offset depends on the game.<br>For 120hz IIDX(TDJ), leave this at -0.25.<br>For LDJ IIDX, set it to 2.<br>For beatoraja, set it to 0. <td> </tr>"
          "<tr> <td align=\"right\">Offset (ms):</td> "
          "<td align=\"left\">" "<input id=\"offset-ms\" type=\"number\" minlength=\"1\" value=\"0\"></input>"
          "</td></tr>"
@@ -34,12 +38,14 @@
                 wn-1 (js/parseFloat (aget (js/document.getElementById "wn-sud") "value"))
                 wn-2 (js/parseFloat (aget (js/document.getElementById "wn-lift") "value"))
                 iidx-offset (js/parseFloat (aget (js/document.getElementById "offset-iidx") "value"))
+                base-offset (js/parseFloat (aget (js/document.getElementById "base-offset") "value"))
                 ms-offset (js/parseFloat (aget (js/document.getElementById "offset-ms") "value"))
 
                 wn (+ wn-1 wn-2)
                 wn-complement (- 1000 wn)
                 frame-ms 16.666666
                 note-time-ms (* (/ gn 10) frame-ms)
+                iidx-offset (- iidx-offset base-offset)
                 ms-offset (- ms-offset (* iidx-offset frame-ms))
                 reaction-time-ms (+ note-time-ms ms-offset)
                 note-speed (/ wn-complement note-time-ms)]
